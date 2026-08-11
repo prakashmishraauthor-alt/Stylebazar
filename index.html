@@ -3,459 +3,1197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Bazaar — Product Store</title>
+
+<title>Style Bazaar | Fashion</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --blue:#8eabc7;
-  --pink:#c86f7c;
-  --cream:#f7f2eb;
-  --ink:#243d45;
-  --dark:#173743;
-}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--ink);
-  background:var(--blue);
-}
-a{text-decoration:none;color:inherit}
 
-/* HERO */
-.hero{
-  min-height:520px;
-  background:var(--dark);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:70px 25px;
-  position:relative;
-  overflow:hidden;
-}
-.hero:before,.hero:after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  opacity:.12;
-}
-.hero:before{
-  width:480px;height:480px;
-  background:#fff;
-  left:-180px;top:-180px;
-}
-.hero:after{
-  width:600px;height:600px;
-  background:#d98a97;
-  right:-240px;bottom:-300px;
-}
-.hero-content{position:relative;z-index:2;max-width:900px}
-.brand{
-  font-family:Georgia,serif;
-  font-size:22px;
-  margin-bottom:45px;
-  letter-spacing:1px;
-}
-.hero-product{
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.08);
-  padding:38px 35px;
-  max-width:720px;
-  margin:auto;
-}
-.hero-product .label{
-  font-size:13px;
-  letter-spacing:3px;
-  margin-bottom:15px;
-}
-.hero-product h1{
-  font-size:clamp(42px,7vw,78px);
-  line-height:.95;
-  margin-bottom:18px;
-}
-.hero-product .price{
-  font-size:28px;
-  font-weight:bold;
-  margin-bottom:12px;
-}
-.hero-product p{
-  max-width:600px;
-  margin:0 auto 28px;
-  line-height:1.6;
-  color:#e5ecef;
-}
-.btn{
-  display:inline-block;
-  background:white;
-  color:#233b43;
-  padding:14px 28px;
-  font-weight:bold;
-  border:none;
-  cursor:pointer;
-  transition:.25s;
-}
-.btn:hover{background:#f0d8dc;transform:translateY(-2px)}
+/* =========================
+   RESET
+========================= */
 
-/* INTRO */
-.intro{
-  padding:28px 20px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:35px;
-  align-items:center;
-  max-width:1100px;
-  margin:auto;
-}
-.intro-product{
-  background:var(--cream);
-  min-height:320px;
-  border-radius:22px;
-  padding:45px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.intro-product .small{letter-spacing:2px;font-size:12px;margin-bottom:12px}
-.intro-product h2{
-  font-family:Georgia,serif;
-  font-size:36px;
-  line-height:1.1;
-  margin-bottom:14px;
-}
-.intro-product .price{
-  font-size:24px;
-  font-weight:bold;
-  margin-bottom:14px;
-}
-.intro-product p{line-height:1.65;max-width:470px}
-.intro-copy{padding:20px}
-.intro-copy h2{
-  font-size:42px;
-  font-weight:400;
-  line-height:1.05;
-  margin-bottom:45px;
-}
-.intro-copy p{line-height:1.65;font-size:15px}
-
-/* PRODUCT GRID */
-.products-section{
-  background:var(--pink);
-  padding:32px 20px 55px;
-}
-.product-grid{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-.product-card{
-  min-height:330px;
-  border-radius:20px;
-  padding:32px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  color:white;
-  position:relative;
-  overflow:hidden;
-  background:var(--dark);
-}
-.product-card:nth-child(2){background:#d79b9b}
-.product-card:nth-child(3){background:#9ca8b2}
-.product-card:nth-child(4){background:#9b876f}
-.product-card:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(transparent 30%,rgba(0,0,0,.5));
-}
-.product-info{position:relative;z-index:2}
-.product-info .tag{
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:12px;
-}
-.product-info h3{
-  font-size:38px;
-  font-weight:400;
-  margin-bottom:8px;
-}
-.product-info .price{
-  font-size:21px;
-  font-weight:bold;
-  margin-bottom:10px;
-}
-.product-info p{
-  font-size:14px;
-  line-height:1.5;
-  max-width:380px;
-}
-.product-info .shop{
-  display:inline-block;
-  margin-top:18px;
-  border-bottom:2px solid white;
-  padding-bottom:3px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* GUARANTEE */
-.guarantee{
-  background:var(--pink);
-  color:white;
-  padding:70px 25px 100px;
-  text-align:center;
-}
-.guarantee h2{
-  font-size:42px;
-  font-weight:400;
-  margin-bottom:75px;
-}
-.guarantee-grid{
-  max-width:1050px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:40px;
-}
-.guarantee-item h3{
-  font-size:17px;
-  margin-bottom:10px;
-}
-.guarantee-item p{
-  font-size:12px;
-  opacity:.9;
+html {
+    scroll-behavior: smooth;
 }
 
-/* FOOTER */
-footer{
-  background:var(--blue);
-  padding:35px 22px;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #29454c;
+    background: #8eabc7;
 }
-.footer-grid{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:45px;
-  align-items:center;
-}
-.footer-brand{
-  font-family:Georgia,serif;
-  font-size:20px;
-  margin-bottom:65px;
-}
-.footer-label{
-  font-size:12px;
-  letter-spacing:1px;
-  margin-bottom:10px;
-}
-.footer-info{
-  font-weight:bold;
-  font-size:20px;
-  line-height:1.35;
-}
-.footer-social{
-  margin-top:35px;
-}
-.footer-social a{
-  display:block;
-  font-weight:bold;
-  font-size:18px;
-  line-height:1.4;
-}
-.footer-email{
-  margin-top:35px;
-  font-size:13px;
-}
-.footer-product{
-  background:var(--cream);
-  border-radius:22px;
-  min-height:310px;
-  padding:42px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.footer-product .label{
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:15px;
-}
-.footer-product h3{
-  font-family:Georgia,serif;
-  font-size:38px;
-  line-height:1.05;
-  margin-bottom:12px;
-}
-.footer-product .price{
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:12px;
-}
-.footer-product p{line-height:1.6}
 
-/* RESPONSIVE */
-@media(max-width:760px){
-  .hero{min-height:500px}
-  .brand{margin-bottom:30px}
-  .intro,.product-grid,.footer-grid{grid-template-columns:1fr}
-  .intro-copy{padding:25px 5px 35px}
-  .intro-copy h2{font-size:36px;margin-bottom:25px}
-  .product-card{min-height:300px}
-  .guarantee-grid{grid-template-columns:1fr;gap:35px}
-  .guarantee h2{font-size:36px;margin-bottom:50px}
-  .footer-brand{margin-bottom:40px}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-@media(max-width:480px){
-  .hero-product{padding:28px 18px}
-  .hero-product h1{font-size:43px}
-  .intro-product{padding:30px;min-height:280px}
-  .intro-product h2{font-size:30px}
-  .product-card{padding:25px;min-height:280px}
-  .product-info h3{font-size:32px}
-  .guarantee{padding-bottom:70px}
-  .footer-product{padding:30px;min-height:280px}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    height: 650px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-image img {
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0,0,0,.15),
+        rgba(0,0,0,.65)
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    padding: 30px;
+}
+
+.logo {
+    position: absolute;
+    top: 45px;
+
+    font-family: Georgia, serif;
+    font-size: 23px;
+    letter-spacing: 2px;
+}
+
+.hero-small {
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 82px);
+    line-height: .9;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+}
+
+.hero-description {
+    max-width: 560px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.button {
+    display: inline-block;
+
+    background: white;
+    color: #243d45;
+
+    padding: 14px 28px;
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+
+    transition: .3s;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    background: #f4e6df;
+}
+
+
+/* =========================
+   FEATURED PRODUCT
+========================= */
+
+.featured {
+    max-width: 1150px;
+    margin: auto;
+
+    padding: 35px 25px;
+
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+
+    gap: 45px;
+
+    align-items: center;
+}
+
+.featured-image {
+    height: 450px;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    background: #ddd;
+}
+
+.featured-image img {
+    transition: transform .5s;
+}
+
+.featured-image:hover img {
+    transform: scale(1.04);
+}
+
+.featured-content {
+    padding: 25px;
+}
+
+.label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.featured-content h2 {
+    font-family: Georgia, serif;
+
+    font-size: clamp(42px, 5vw, 65px);
+
+    line-height: .95;
+
+    font-weight: normal;
+
+    margin-bottom: 18px;
+}
+
+.price {
+    font-size: 23px;
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+.featured-content p {
+    font-size: 14px;
+    line-height: 1.7;
+
+    max-width: 450px;
+}
+
+.view-link {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    border-bottom: 1px solid;
+
+    padding-bottom: 4px;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   PRODUCT SECTION
+========================= */
+
+.products {
+    background: #c86f7d;
+
+    padding: 70px 25px 90px;
+}
+
+.products-heading {
+    max-width: 1150px;
+
+    margin: 0 auto 45px;
+
+    color: white;
+}
+
+.products-heading .label {
+    margin-bottom: 12px;
+}
+
+.products-heading h2 {
+    font-family: Georgia, serif;
+
+    font-size: clamp(43px, 6vw, 70px);
+
+    font-weight: normal;
+
+    line-height: .95;
+}
+
+.product-grid {
+    max-width: 1150px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+
+/* PRODUCT CARD */
+
+.product-card {
+    background: #f4eee6;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    transition: .3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 370px;
+
+    position: relative;
+
+    background: #bbb;
+}
+
+.product-image img {
+    transition: .5s;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.04);
+}
+
+.product-tag {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    background: white;
+
+    padding: 7px 12px;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    font-weight: bold;
+}
+
+.product-info {
+    padding: 23px;
+}
+
+.category {
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 7px;
+}
+
+.product-info h3 {
+    font-family: Georgia, serif;
+
+    font-size: 31px;
+
+    font-weight: normal;
+
+    margin-bottom: 10px;
+}
+
+.product-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.product-row .price {
+    margin: 0;
+}
+
+.product-row a {
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    font-weight: bold;
+}
+
+.description {
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   EDITORIAL SECTION
+========================= */
+
+.editorial {
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding: 90px 25px;
+
+    display: grid;
+
+    grid-template-columns: .9fr 1.1fr;
+
+    gap: 45px;
+
+    align-items: center;
+}
+
+.editorial-text {
+    padding: 20px;
+}
+
+.editorial-text h2 {
+    font-family: Georgia, serif;
+
+    font-weight: normal;
+
+    font-size: clamp(45px, 6vw, 70px);
+
+    line-height: .95;
+
+    margin-bottom: 28px;
+}
+
+.editorial-text p {
+    max-width: 450px;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+}
+
+.editorial-image {
+    height: 470px;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   GUARANTEE
+========================= */
+
+.guarantee {
+    background: #c86f7d;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 80px 25px 100px;
+}
+
+.guarantee h2 {
+    font-family: Georgia, serif;
+
+    font-size: clamp(45px, 6vw, 70px);
+
+    font-weight: normal;
+
+    margin-bottom: 70px;
+}
+
+.guarantee-grid {
+    max-width: 1050px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 40px;
+}
+
+.guarantee-item h3 {
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+.guarantee-item p {
+    font-size: 12px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 45px 25px;
+
+    background: #8eabc7;
+}
+
+.footer-container {
+    max-width: 1150px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: .8fr 1.2fr;
+
+    gap: 50px;
+
+    align-items: center;
+}
+
+.footer-brand {
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    margin-bottom: 55px;
+}
+
+.footer-label {
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+.footer-address {
+    font-weight: bold;
+
+    font-size: 18px;
+
+    line-height: 1.4;
+}
+
+.social {
+    margin-top: 35px;
+}
+
+.social a {
+    display: block;
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+}
+
+.email {
+    margin-top: 30px;
+
+    font-size: 12px;
+}
+
+.footer-product {
+    background: #f4eee6;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+}
+
+.footer-product-image {
+    height: 400px;
+}
+
+.footer-product-content {
+    padding: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.footer-product-content h3 {
+    font-family: Georgia, serif;
+
+    font-size: 38px;
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    margin-bottom: 15px;
+}
+
+.footer-product-content p {
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 800px) {
+
+    .hero {
+        height: 580px;
+    }
+
+    .featured,
+    .editorial,
+    .footer-container {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-image {
+        height: 380px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editorial-image {
+        height: 380px;
+    }
+
+    .guarantee-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-product {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-product-image {
+        height: 320px;
+    }
+}
+
+
+@media(max-width: 500px) {
+
+    .hero h1 {
+        font-size: 46px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+    .featured {
+        padding: 20px 15px 50px;
+    }
+
+    .featured-content {
+        padding: 15px;
+    }
+
+    .featured-image {
+        height: 320px;
+    }
+
+    .products {
+        padding: 55px 15px 70px;
+    }
+
+    .product-image {
+        height: 330px;
+    }
+
+    .editorial {
+        padding: 65px 15px;
+    }
+
+    .guarantee {
+        padding: 60px 20px 75px;
+    }
+
+    .footer-product-content {
+        padding: 30px;
+    }
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- HERO -->
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
 <section class="hero">
-  <div class="hero-content">
-    <div class="brand">STYLE BAZAAR</div>
-    <div class="hero-product">
-      <div class="label">FEATURED PRODUCT</div>
-      <h1>Urban<br>Essential Set</h1>
-      <div class="price">₹2,499</div>
-      <p>Premium everyday separates designed for effortless style, comfort and a timeless wardrobe.</p>
-      <a href="#products" class="btn">Shop New Arrivals</a>
+
+    <!-- CHANGE THIS IMAGE -->
+    <div class="hero-image">
+        <img src="images/splash.jpg"
+             alt="Fashion collection">
     </div>
-  </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="logo">
+            STYLE BAZAAR
+        </div>
+
+        <div class="hero-small">
+            NEW SEASON • 2026
+        </div>
+
+        <h1>
+            Most Wanted<br>
+            Most Loved
+        </h1>
+
+        <p class="hero-description">
+            Contemporary fashion designed for people who
+            want effortless style, confidence and individuality.
+        </p>
+
+        <a href="#products" class="button">
+            SHOP NEW ARRIVALS
+        </a>
+
+    </div>
+
 </section>
 
-<!-- INTRO -->
-<section class="intro">
-  <div class="intro-product">
-    <div class="small">NEW ARRIVAL</div>
-    <h2>Classic Denim Duo</h2>
-    <div class="price">₹1,899</div>
-    <p>Relaxed-fit denim pieces with a soft finish and versatile silhouette. Easy to dress up or wear casually.</p>
-  </div>
 
-  <div class="intro-copy">
-    <h2>Thoughtful +<br>Timeless</h2>
-    <p>
-      Our collection is built around pieces that feel modern today and remain
-      relevant tomorrow. Every product is selected for comfort, quality,
-      versatility and effortless everyday styling.
-    </p>
-  </div>
+
+<!-- =====================================================
+     FEATURED PRODUCT
+====================================================== -->
+
+<section class="featured">
+
+    <div class="featured-image">
+
+        <!-- FEATURED PRODUCT IMAGE -->
+        <img src="UE.png"
+             alt="Urban Essential Set">
+
+    </div>
+
+
+    <div class="featured-content">
+
+        <div class="label">
+            FEATURED PRODUCT
+        </div>
+
+        <h2>
+            Urban<br>
+            Essential Set
+        </h2>
+
+        <div class="price">
+            ₹2,499
+        </div>
+
+        <p>
+            A relaxed contemporary set created for everyday
+            movement. Soft fabric, clean tailoring and an easy
+            silhouette make it a versatile wardrobe essential.
+        </p>
+
+        <a href="#" class="view-link">
+            VIEW PRODUCT →
+        </a>
+
+    </div>
+
 </section>
 
-<!-- PRODUCTS -->
-<section class="products-section" id="products">
-  <div class="product-grid">
 
-    <article class="product-card">
-      <div class="product-info">
-        <div class="tag">SHOP</div>
-        <h3>Weekend Jacket</h3>
-        <div class="price">₹2,299</div>
-        <p>Lightweight casual jacket with a relaxed fit and clean everyday finish.</p>
-        <span class="shop">VIEW PRODUCT</span>
-      </div>
-    </article>
 
-    <article class="product-card">
-      <div class="product-info">
-        <div class="tag">SHOP</div>
-        <h3>Color Pop Top</h3>
-        <div class="price">₹999</div>
-        <p>Bright contemporary top with a flattering cut for casual outings.</p>
-        <span class="shop">VIEW PRODUCT</span>
-      </div>
-    </article>
+<!-- =====================================================
+     PRODUCT COLLECTION
+====================================================== -->
 
-    <article class="product-card">
-      <div class="product-info">
-        <div class="tag">SHOP</div>
-        <h3>Sunset Dress</h3>
-        <div class="price">₹1,799</div>
-        <p>Elegant flowing dress made for comfortable days and memorable evenings.</p>
-        <span class="shop">VIEW PRODUCT</span>
-      </div>
-    </article>
+<section class="products" id="products">
 
-    <article class="product-card">
-      <div class="product-info">
-        <div class="tag">SHOP</div>
-        <h3>Cozy Knit</h3>
-        <div class="price">₹1,499</div>
-        <p>Soft textured knit with a relaxed silhouette and understated premium look.</p>
-        <span class="shop">VIEW PRODUCT</span>
-      </div>
-    </article>
+    <div class="products-heading">
 
-  </div>
+        <div class="label">
+            THE COLLECTION
+        </div>
+
+        <h2>
+            Find Your<br>
+            Signature Style
+        </h2>
+
+    </div>
+
+
+    <div class="product-grid">
+
+
+        <!-- PRODUCT 1 -->
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="wj.png"
+                     alt="Weekend Jacket">
+
+                <span class="product-tag">
+                    NEW
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="category">
+                    OUTERWEAR
+                </div>
+
+                <h3>
+                    Weekend Jacket
+                </h3>
+
+                <div class="product-row">
+
+                    <div class="price">
+                        ₹2,299
+                    </div>
+
+                    <a href="#">
+                        VIEW →
+                    </a>
+
+                </div>
+
+                <p class="description">
+                    Lightweight relaxed jacket with a modern
+                    everyday fit.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 2 -->
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="ct.png"
+                     alt="Color Pop Top">
+
+                <span class="product-tag">
+                    TRENDING
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="category">
+                    TOPS
+                </div>
+
+                <h3>
+                    Color Pop Top
+                </h3>
+
+                <div class="product-row">
+
+                    <div class="price">
+                        ₹599
+                    </div>
+
+                    <a href="#">
+                        VIEW →
+                    </a>
+
+                </div>
+
+                <p class="description">
+                    A bold contemporary top designed to brighten
+                    your wardrobe.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 3 -->
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="sd.png"
+                     alt="Sunset Dress">
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="category">
+                    DRESSES
+                </div>
+
+                <h3>
+                    Sunset Dress
+                </h3>
+
+                <div class="product-row">
+
+                    <div class="price">
+                        ₹1,799
+                    </div>
+
+                    <a href="#">
+                        VIEW →
+                    </a>
+
+                </div>
+
+                <p class="description">
+                    Flowing silhouette with a graceful finish
+                    for day or evening.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 4 -->
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="CK.png"
+                     alt="Cozy Knit">
+
+                <span class="product-tag">
+                    BESTSELLER
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="category">
+                    KNITS
+                </div>
+
+                <h3>
+                    Cozy Knit
+                </h3>
+
+                <div class="product-row">
+
+                    <div class="price">
+                        ₹1,499
+                    </div>
+
+                    <a href="#">
+                        VIEW →
+                    </a>
+
+                </div>
+
+                <p class="description">
+                    Soft textured knit offering warmth without
+                    compromising style.
+                </p>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
 </section>
 
-<!-- GUARANTEE -->
+
+
+<!-- =====================================================
+     EDITORIAL
+====================================================== -->
+
+<section class="editorial">
+
+    <div class="editorial-text">
+
+        <div class="label">
+            OUR PHILOSOPHY
+        </div>
+
+        <h2>
+            Thoughtful +<br>
+            Timeless
+        </h2>
+
+        <p>
+            We believe great fashion does not have to shout.
+            Our pieces are designed around strong silhouettes,
+            comfortable materials and details that remain
+            relevant season after season.
+        </p>
+
+        <a href="#products" class="button">
+            EXPLORE COLLECTION
+        </a>
+
+    </div>
+
+
+    <div class="editorial-image">
+
+        <!-- EDITORIAL IMAGE -->
+        <img src="images/editorial.jpg"
+             alt="Fashion editorial">
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GUARANTEE
+====================================================== -->
+
 <section class="guarantee">
-  <h2>We guarantee</h2>
 
-  <div class="guarantee-grid">
-    <div class="guarantee-item">
-      <h3>FREE DELIVERY</h3>
-      <p>No minimum order required</p>
+    <div class="label">
+        SHOP WITH CONFIDENCE
     </div>
 
-    <div class="guarantee-item">
-      <h3>FREE RETURNS</h3>
-      <p>With money-back guarantee</p>
+    <h2>
+        We guarantee
+    </h2>
+
+
+    <div class="guarantee-grid">
+
+        <div class="guarantee-item">
+
+            <h3>
+                FREE DELIVERY
+            </h3>
+
+            <p>
+                No minimum order required
+            </p>
+
+        </div>
+
+
+        <div class="guarantee-item">
+
+            <h3>
+                EASY RETURNS
+            </h3>
+
+            <p>
+                Simple 7-day return policy
+            </p>
+
+        </div>
+
+
+        <div class="guarantee-item">
+
+            <h3>
+                SECURE PAYMENT
+            </h3>
+
+            <p>
+                Safe and protected transactions
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="guarantee-item">
-      <h3>SECURE PAYMENT</h3>
-      <p>Guaranteed safe transactions</p>
-    </div>
-  </div>
 </section>
 
-<!-- FOOTER -->
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
 <footer>
-  <div class="footer-grid">
 
-    <div>
-      <div class="footer-brand">STYLE BAZAAR</div>
+    <div class="footer-container">
 
-      <div class="footer-label">LOCATION</div>
-      <div class="footer-info">
-        123 ANYWHERE ST.<br>
-        ANY CITY,<br>
-        ANY STATE
-      </div>
 
-      <div class="footer-social">
-        <div class="footer-label">FOLLOW US ON SOCIAL</div>
-        <a href="#">INSTAGRAM</a>
-        <a href="#">TWITTER</a>
-        <a href="#">FACEBOOK</a>
-      </div>
+        <div>
 
-      <div class="footer-email">hello@stylebazaar.com</div>
+            <div class="footer-brand">
+                STYLE BAZAAR
+            </div>
+
+
+            <div class="footer-label">
+                LOCATION
+            </div>
+
+            <div class="footer-address">
+
+                123 ANYWHERE STREET<br>
+                NEW DELHI, INDIA<br>
+                110001
+
+            </div>
+
+
+            <div class="social">
+
+                <div class="footer-label">
+                    FOLLOW US
+                </div>
+
+                <a href="#">
+                    INSTAGRAM
+                </a>
+
+                <a href="#">
+                    FACEBOOK
+                </a>
+
+                <a href="#">
+                    PINTEREST
+                </a>
+
+            </div>
+
+
+            <div class="email">
+                hello@stylebazaar.com
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-product">
+
+
+            <div class="footer-product-image">
+
+                <!-- FOOTER PRODUCT IMAGE -->
+
+                <img src="images/footer.jpg"
+                     alt="Everyday Denim Jacket">
+
+            </div>
+
+
+            <div class="footer-product-content">
+
+                <div class="label">
+                    EDITOR'S PICK
+                </div>
+
+                <h3>
+                    Everyday<br>
+                    Denim Jacket
+                </h3>
+
+                <div class="price">
+                    ₹2,199
+                </div>
+
+                <p>
+                    A timeless wardrobe staple with a modern
+                    cut and effortless everyday appeal.
+                </p>
+
+                <a href="#" class="button">
+                    SHOP NOW
+                </a>
+
+            </div>
+
+
+        </div>
+
     </div>
 
-    <div class="footer-product">
-      <div class="label">EDITOR'S PICK</div>
-      <h3>Everyday<br>Denim Jacket</h3>
-      <div class="price">₹2,199</div>
-      <p>A wardrobe staple with a modern cut, durable fabric and effortless styling for every season.</p>
-    </div>
-
-  </div>
 </footer>
+
 
 </body>
 </html>
