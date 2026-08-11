@@ -90,24 +90,41 @@ a {
    HERO
 ========================================================= */
 
+/* =========================================================
+   HERO — EDITORIAL FASHION BANNER
+========================================================= */
+
 .hero {
-    height: 720px;
+    height: 700px;
+    width: 100%;
     position: relative;
     overflow: hidden;
-    color: white;
+    color: #fff;
 }
+
+/* HERO IMAGE */
 
 .hero-image {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
+    display: block;
+
     object-fit: cover;
     object-position: center center;
 }
+
+
+/* DARK GRADIENT
+   Keeps the photograph visible while giving text
+   a clean area to sit on.
+*/
 
 .hero-overlay {
     position: absolute;
@@ -115,55 +132,283 @@ a {
 
     background:
         linear-gradient(
-            rgba(0,0,0,.15),
-            rgba(0,0,0,.68)
+            90deg,
+            rgba(0,0,0,.62) 0%,
+            rgba(0,0,0,.42) 28%,
+            rgba(0,0,0,.12) 60%,
+            rgba(0,0,0,.08) 100%
         );
 }
+
+
+/* HERO CONTENT */
 
 .hero-content {
     position: relative;
     z-index: 2;
 
+    width: 100%;
+    max-width: 1250px;
+
     height: 100%;
 
+    margin: auto;
+
+    padding:
+        40px 55px
+        60px 55px;
+
     display: flex;
+
     flex-direction: column;
-    align-items: center;
+
+    align-items: flex-start;
+
     justify-content: center;
 
-    text-align: center;
-
-    padding: 30px;
+    text-align: left;
 }
+
+
+/* LOGO */
 
 .logo {
     position: absolute;
-    top: 45px;
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 23px;
-    letter-spacing: 2px;
+    top: 38px;
+    left: 55px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 22px;
+
+    letter-spacing: 4px;
+
+    font-weight: normal;
 }
+
+
+/* SMALL LABEL */
 
 .hero-small {
-    font-size: 11px;
+    font-size: 10px;
+
     letter-spacing: 4px;
+
     margin-bottom: 20px;
+
+    text-transform: uppercase;
 }
+
+
+/* MAIN HEADING */
 
 .hero h1 {
-    font-size: clamp(48px, 7vw, 88px);
-    line-height: .9;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(55px, 7vw, 92px);
+
+    font-weight: 700;
+
+    line-height: .88;
+
+    letter-spacing: -3px;
+
     text-transform: uppercase;
-    letter-spacing: -2px;
-    margin-bottom: 25px;
+
+    margin-bottom: 28px;
+
+    max-width: 650px;
 }
 
+
+/* DESCRIPTION */
+
 .hero-description {
-    max-width: 560px;
-    font-size: 15px;
-    line-height: 1.6;
+    max-width: 430px;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
     margin-bottom: 30px;
+}
+
+
+/* BUTTON */
+
+.hero .button {
+    display: inline-block;
+
+    background: #fff;
+
+    color: #243d45;
+
+    padding: 15px 30px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    transition: .3s ease;
+}
+
+.hero .button:hover {
+    background: #243d45;
+
+    color: #fff;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .hero {
+        height: 650px;
+    }
+
+    .hero-content {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .hero h1 {
+        max-width: 560px;
+
+        font-size: clamp(
+            50px,
+            8vw,
+            75px
+        );
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .hero {
+        height: 650px;
+    }
+
+    .hero-image img {
+        object-position: 58% center;
+    }
+
+    .hero-overlay {
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,.68) 0%,
+                rgba(0,0,0,.40) 55%,
+                rgba(0,0,0,.20) 100%
+            );
+    }
+
+    .hero-content {
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding:
+            40px 22px;
+    }
+
+    .logo {
+        position: absolute;
+
+        top: 28px;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        font-size: 18px;
+
+        letter-spacing: 3px;
+
+        white-space: nowrap;
+    }
+
+    .hero-small {
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 18px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+
+        line-height: .9;
+
+        letter-spacing: -2px;
+
+        max-width: 360px;
+
+        margin-bottom: 22px;
+    }
+
+    .hero-description {
+        max-width: 320px;
+
+        font-size: 12px;
+
+        line-height: 1.6;
+
+        margin-bottom: 25px;
+    }
+
+    .hero .button {
+        padding: 14px 24px;
+
+        font-size: 9px;
+
+        letter-spacing: 1.5px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .hero {
+        height: 600px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
 }
 
 
@@ -186,7 +431,7 @@ a {
 }
 
 .featured-image {
-    height: 620px;
+    height: 670px;
 
     border-radius: 24px;
 
@@ -305,7 +550,7 @@ a {
 /* TALL PRODUCT IMAGES */
 
 .product-image {
-    height: 570px;
+    height: 650px;
 
     position: relative;
 
@@ -448,7 +693,7 @@ a {
 /* TALL EDITORIAL IMAGE */
 
 .editorial-image {
-    height: 620px;
+    height: 650px;
 
     border-radius: 24px;
 
@@ -907,7 +1152,7 @@ footer {
 
     <!-- CHANGE THIS IMAGE -->
     <div class="hero-image">
-        <img src="hi.png"
+        <img src="hii.png"
              alt="Fashion collection">
     </div>
 
