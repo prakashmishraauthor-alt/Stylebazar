@@ -1,2 +1,2 @@
 # Stylebazar
-Clothing website
+Clothing website 
