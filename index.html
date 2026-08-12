@@ -1272,7 +1272,13 @@ const products = [
         name: 'Urban Essential Set', 
         category: 'SET', 
         price: 2499, 
+        originalPrice: 3299,
+        rating: 4.8,
+        reviewsCount: 42,
         img: 'UE.png',
+        sizes: ['S', 'M', 'L', 'XL'],
+        fabric: '100% Breathable Organic Cotton',
+        care: 'Machine wash cold, lay flat to dry',
         desc: 'A relaxed contemporary set created for everyday movement. Soft fabric, clean tailoring and an easy silhouette make it a versatile wardrobe essential.'
     },
     { 
@@ -1280,8 +1286,14 @@ const products = [
         name: 'Weekend Jacket', 
         category: 'OUTERWEAR', 
         price: 2299, 
+        originalPrice: 2899,
+        rating: 4.9,
+        reviewsCount: 18,
         img: 'wj.png',
         tag: 'NEW',
+        sizes: ['S', 'M', 'L'],
+        fabric: 'Water-resistant Poly-Blend',
+        care: 'Dry clean only',
         desc: 'Lightweight relaxed jacket with a modern everyday fit. Features functional side pockets and a durable zip-front closure.'
     },
     { 
@@ -1289,8 +1301,14 @@ const products = [
         name: 'Color Pop Top', 
         category: 'TOPS', 
         price: 599, 
+        originalPrice: 899,
+        rating: 4.5,
+        reviewsCount: 65,
         img: 'ct.png',
         tag: 'TRENDING',
+        sizes: ['XS', 'S', 'M', 'L'],
+        fabric: '95% Cotton, 5% Elastane',
+        care: 'Machine wash warm, tumble dry low',
         desc: 'A bold contemporary top designed to brighten your wardrobe. Breathable cotton blend ideal for warmer days.'
     },
     { 
@@ -1298,7 +1316,13 @@ const products = [
         name: 'Sunset Dress', 
         category: 'DRESSES', 
         price: 1799, 
+        originalPrice: 2299,
+        rating: 4.7,
+        reviewsCount: 29,
         img: 'sd.png',
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: '100% Viscose Rayon',
+        care: 'Hand wash cold, line dry in shade',
         desc: 'Flowing silhouette with a graceful finish for day or evening occasions. Elegant waist detailing for an adaptable look.'
     },
     { 
@@ -1306,8 +1330,14 @@ const products = [
         name: 'Cozy Knit', 
         category: 'KNITS', 
         price: 1499, 
+        originalPrice: 1999,
+        rating: 4.9,
+        reviewsCount: 84,
         img: 'CK.png',
         tag: 'BESTSELLER',
+        sizes: ['S', 'M', 'L'],
+        fabric: 'Soft Wool Blend',
+        care: 'Hand wash gently with wool detergent',
         desc: 'Soft textured knit offering warmth without compromising style. Ribbed cuffs and hem line for added comfort.'
     },
     { 
@@ -1315,15 +1345,24 @@ const products = [
         name: 'Everyday Denim Jacket', 
         category: 'OUTERWEAR', 
         price: 2199, 
+        originalPrice: 2799,
+        rating: 4.8,
+        reviewsCount: 37,
         img: 'dj.png',
-        desc: 'A timeless wardrobe staple with a modern cut and effortless everyday appeal. Crafted from premium wash denim.'
+        sizes: ['S', 'M', 'L', 'XL'],
+        fabric: '100% Premium Wash Denim Cotton',
+        care: 'Machine wash cold inside out',
+        desc: 'A timeless wardrobe staple with a modern cut and effortless everyday appeal. Crafted from heavy-gauge denim.'
     }
 ];
 
 let cart = [];
+let selectedSize = null;
 
 function renderProducts() {
     const grid = document.getElementById('productGrid');
+    if (!grid) return;
+
     // Display items 2 to 5 in the main grid (Featured is 1, Footer is 6)
     const gridItems = products.filter(p => p.id >= 2 && p.id <= 5);
     
@@ -1337,12 +1376,16 @@ function renderProducts() {
                 <div class="category">${product.category}</div>
                 <h3>${product.name}</h3>
                 <div class="product-row">
-                    <div class="price">₹${product.price.toLocaleString()}</div>
+                    <div class="price">
+                        ₹${product.price.toLocaleString()} 
+                        <span style="text-decoration: line-through; opacity: 0.5; font-size: 12px; margin-left: 5px;">₹${product.originalPrice.toLocaleString()}</span>
+                    </div>
+                    <div style="font-size: 12px; color: #f1c40f;">★ ${product.rating} (${product.reviewsCount})</div>
                 </div>
                 <p class="description">${product.desc}</p>
                 <div class="card-btn-group">
                     <button class="card-view-btn" onclick="openProductModal(${product.id})">View Details</button>
-                    <button class="card-add-btn" onclick="addToCart(${product.id})">Add To Bag</button>
+                    <button class="card-add-btn" onclick="quickAddToCart(${product.id})">Add To Bag</button>
                 </div>
             </div>
         </article>
@@ -1353,41 +1396,88 @@ function openProductModal(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
+    // Default to the first available size
+    selectedSize = product.sizes ? product.sizes[0] : 'Free Size';
+
+    // Set core details
     document.getElementById('modalImg').src = product.img;
     document.getElementById('modalCategory').innerText = product.category;
     document.getElementById('modalTitle').innerText = product.name;
-    document.getElementById('modalPrice').innerText = `₹${product.price.toLocaleString()}`;
-    document.getElementById('modalDesc').innerText = product.desc;
+    document.getElementById('modalPrice').innerHTML = `
+        ₹${product.price.toLocaleString()} 
+        <span style="text-decoration: line-through; opacity: 0.5; font-size: 14px; margin-left: 6px;">₹${product.originalPrice.toLocaleString()}</span>
+        <span style="font-size: 13px; color: #f1c40f; margin-left: 10px;">★ ${product.rating} (${product.reviewsCount} reviews)</span>
+    `;
+    
+    // Inject size selector & extra PDP details into description container
+    document.getElementById('modalDesc').innerHTML = `
+        <p style="margin-bottom: 15px;">${product.desc}</p>
+        
+        <div style="margin-bottom: 15px;">
+            <strong style="font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 8px;">SELECT SIZE:</strong>
+            <div style="display: flex; gap: 8px;" id="sizeContainer">
+                ${product.sizes.map(size => `
+                    <button type="button" 
+                            onclick="selectSize('${size}')" 
+                            class="size-btn ${size === selectedSize ? 'active' : ''}" 
+                            style="padding: 6px 12px; border: 1px solid rgba(255,255,255,0.4); background: ${size === selectedSize ? '#ffffff' : 'transparent'}; color: ${size === selectedSize ? '#222222' : '#ffffff'}; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                        ${size}
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+
+        <div style="font-size: 11px; line-height: 1.6; opacity: 0.85; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px;">
+            <div><strong>Fabric:</strong> ${product.fabric}</div>
+            <div><strong>Care:</strong> ${product.care}</div>
+        </div>
+    `;
     
     const cartBtn = document.getElementById('modalAddToCartBtn');
     cartBtn.onclick = function() {
-        addToCart(product.id);
+        addToCart(product.id, selectedSize);
         closeProductModal();
     };
 
     document.getElementById('productModal').classList.add('active');
 }
 
-function closeProductModal(e) {
-    if (!e || e.target.id === 'productModal' || e.target.classList.contains('close-modal-btn')) {
-        document.getElementById('productModal').classList.remove('active');
-    }
+function selectSize(size) {
+    selectedSize = size;
+    const buttons = document.querySelectorAll('#sizeContainer .size-btn');
+    buttons.forEach(btn => {
+        if (btn.innerText.trim() === size) {
+            btn.style.background = '#ffffff';
+            btn.style.color = '#222222';
+        } else {
+            btn.style.background = 'transparent';
+            btn.style.color = '#ffffff';
+        }
+    });
 }
 
-function addToCart(productId) {
-    const itemIndex = cart.findIndex(item => item.id === productId);
+function quickAddToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const defaultSize = product.sizes ? product.sizes[0] : 'Free Size';
+    addToCart(productId, defaultSize);
+}
+
+function addToCart(productId, size) {
+    const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
+    
     if (itemIndex > -1) {
         cart[itemIndex].qty += 1;
     } else {
         const product = products.find(p => p.id === productId);
-        cart.push({ ...product, qty: 1 });
+        cart.push({ ...product, size: size, qty: 1 });
     }
+    
     updateCartUI();
     openCart();
 }
 
-function updateQty(productId, change) {
-    const itemIndex = cart.findIndex(item => item.id === productId);
+function updateQty(productId, size, change) {
+    const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
     if (itemIndex > -1) {
         cart[itemIndex].qty += change;
         if (cart[itemIndex].qty <= 0) {
@@ -1397,8 +1487,8 @@ function updateQty(productId, change) {
     updateCartUI();
 }
 
-function removeItem(productId) {
-    cart = cart.filter(item => item.id !== productId);
+function removeItem(productId, size) {
+    cart = cart.filter(item => !(item.id === productId && item.size === size));
     updateCartUI();
 }
 
@@ -1415,12 +1505,13 @@ function updateCartUI() {
                 <img src="${item.img}" class="cart-item-img" alt="${item.name}" onerror="this.src='https://via.placeholder.com/60x75'">
                 <div class="cart-item-details">
                     <div class="cart-item-title">${item.name}</div>
+                    <div style="font-size: 11px; opacity: 0.75; margin-bottom: 4px;">Size: <strong>${item.size}</strong></div>
                     <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString()}</div>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                        <button class="qty-btn" onclick="updateQty(${item.id}, '${item.size}', -1)">-</button>
                         <span>${item.qty}</span>
-                        <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
-                        <button class="remove-item-btn" onclick="removeItem(${item.id})">Remove</button>
+                        <button class="qty-btn" onclick="updateQty(${item.id}, '${item.size}', 1)">+</button>
+                        <button class="remove-item-btn" onclick="removeItem(${item.id}, '${item.size}')">Remove</button>
                     </div>
                 </div>
             </div>
