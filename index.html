@@ -1106,11 +1106,15 @@ footer {
         <div class="featured-content">
             <div class="label">FEATURED PRODUCT</div>
             <h2>Urban<br>Essential Set</h2>
-            <div class="price">₹2,499</div>
+            <div class="price">
+                ₹2,499 
+                <span style="text-decoration: line-through; opacity: 0.5; font-size: 14px; margin-left: 6px;">₹3,299</span>
+                <span style="font-size: 13px; color: #f1c40f; margin-left: 10px;">★ 4.8 (42)</span>
+            </div>
             <p>A relaxed contemporary set created for everyday movement. Soft fabric, clean tailoring and an easy silhouette make it a versatile wardrobe essential.</p>
             <div class="featured-btn-group">
                 <button class="view-link" onclick="openProductModal(1)">VIEW DETAILS</button>
-                <button class="add-link" onclick="addToCart(1)">ADD TO BAG</button>
+                <button class="add-link" onclick="quickAddToCart(1)">ADD TO BAG</button>
             </div>
         </div>
     </div>
@@ -1188,11 +1192,15 @@ footer {
             <div class="footer-product-content">
                 <div class="label">EDITOR'S PICK</div>
                 <h3>Everyday<br>Denim Jacket</h3>
-                <div class="price">₹2,199</div>
+                <div class="price">
+                    ₹2,199
+                    <span style="text-decoration: line-through; opacity: 0.5; font-size: 11px; margin-left: 4px;">₹2,799</span>
+                    <span style="font-size: 11px; color: #f1c40f; margin-left: 6px;">★ 4.8</span>
+                </div>
                 <p>A timeless wardrobe staple with a modern cut and effortless everyday appeal.</p>
                 <div class="footer-btn-group">
                     <button class="button-view" onclick="openProductModal(6)">VIEW DETAILS</button>
-                    <button class="button-add" onclick="addToCart(6)">ADD TO BAG</button>
+                    <button class="button-add" onclick="quickAddToCart(6)">ADD TO BAG</button>
                 </div>
             </div>
         </div>
@@ -1211,7 +1219,7 @@ footer {
                 <div id="modalCategory" class="modal-category"></div>
                 <h2 id="modalTitle"></h2>
                 <div id="modalPrice" class="modal-price"></div>
-                <p id="modalDesc"></p>
+                <div id="modalDesc"></div>
                 <button id="modalAddToCartBtn" class="modal-add-btn">Add To Bag</button>
             </div>
         </div>
@@ -1427,7 +1435,7 @@ function openProductModal(productId) {
             </div>
         </div>
 
-        <div style="font-size: 11px; line-height: 1.6; opacity: 0.85; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px;">
+        <div style="font-size: 11px; line-height: 1.6; opacity: 0.85; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px; margin-bottom: 20px;">
             <div><strong>Fabric:</strong> ${product.fabric}</div>
             <div><strong>Care:</strong> ${product.care}</div>
         </div>
@@ -1454,6 +1462,12 @@ function selectSize(size) {
             btn.style.color = '#ffffff';
         }
     });
+}
+
+function closeProductModal(e) {
+    if (!e || e.target.id === 'productModal' || e.target.classList.contains('close-modal-btn')) {
+        document.getElementById('productModal').classList.remove('active');
+    }
 }
 
 function quickAddToCart(productId) {
