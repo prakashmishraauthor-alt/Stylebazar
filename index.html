@@ -869,6 +869,7 @@ footer {
     width: 100%;
     aspect-ratio: 4 / 5;
     overflow: hidden;
+    position: relative;
 }
 
 .modal-image img {
@@ -884,6 +885,35 @@ footer {
     justify-content: center;
 }
 
+.modal-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.modal-wishlist-icon-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.modal-wishlist-icon-btn.active {
+    background: #ffffff;
+    color: #e74c3c;
+    border-color: #ffffff;
+}
+
 .modal-category {
     font-size: 10px;
     letter-spacing: 2px;
@@ -895,7 +925,6 @@ footer {
 .modal-details h2 {
     font-family: Georgia, serif;
     font-size: 24px;
-    margin-bottom: 10px;
 }
 
 .modal-price {
@@ -905,8 +934,14 @@ footer {
     color: #a9d2e6;
 }
 
+.modal-action-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
 .modal-add-btn {
-    width: 100%;
+    flex: 1;
     padding: 14px;
     background: #8b2e3c;
     color: #ffffff;
@@ -916,11 +951,28 @@ footer {
     text-transform: uppercase;
     border-radius: 6px;
     transition: background 0.3s ease;
-    margin-top: 10px;
 }
 
 .modal-add-btn:hover {
     background: #a33848;
+}
+
+.modal-wishlist-action-btn {
+    padding: 14px 18px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.modal-wishlist-action-btn.active {
+    background: #ffffff;
+    color: #222222;
 }
 
 /* RECOMMENDATIONS SECTION */
@@ -1282,6 +1334,7 @@ footer {
         <div class="filter-group">
             <select id="categoryFilter" class="filter-select" onchange="handleFilterChange()">
                 <option value="ALL">All Categories</option>
+                <option value="MEN">Men</option>
                 <option value="SET">Sets</option>
                 <option value="OUTERWEAR">Outerwear</option>
                 <option value="TOPS">Tops</option>
@@ -1296,6 +1349,8 @@ footer {
                 <option value="M">M</option>
                 <option value="L">L</option>
                 <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="XXXL">XXXL</option>
             </select>
 
             <select id="sortSelect" class="filter-select" onchange="handleFilterChange()">
@@ -1394,14 +1449,22 @@ footer {
         <button class="close-modal-btn" onclick="closeProductModal()">&times;</button>
         <div class="modal-grid">
             <div class="modal-image">
+                <button class="wishlist-btn" id="modalImageWishlistBtn" onclick="toggleWishlistInModal()">♥</button>
                 <img id="modalImg" src="" alt="">
             </div>
             <div class="modal-details">
                 <div id="modalCategory" class="modal-category"></div>
-                <h2 id="modalTitle"></h2>
+                <div class="modal-title-row">
+                    <h2 id="modalTitle"></h2>
+                    <button class="modal-wishlist-icon-btn" id="modalHeaderWishlistBtn" onclick="toggleWishlistInModal()" title="Save to Wishlist">♥</button>
+                </div>
                 <div id="modalPrice" class="modal-price"></div>
                 <div id="modalDesc"></div>
-                <button id="modalAddToCartBtn" class="modal-add-btn">Add To Bag</button>
+                
+                <div class="modal-action-row">
+                    <button id="modalAddToCartBtn" class="modal-add-btn">Add To Bag</button>
+                    <button id="modalWishlistActionBtn" class="modal-wishlist-action-btn" onclick="toggleWishlistInModal()">♥ Wishlist</button>
+                </div>
             </div>
         </div>
         
@@ -1484,9 +1547,11 @@ const products = [
         reviewsCount: 42,
         img: 'UE.png',
         sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Default'],
         fabric: '100% Breathable Organic Cotton',
         care: 'Machine wash cold, lay flat to dry',
         desc: 'A relaxed contemporary set created for everyday movement. Soft fabric, clean tailoring and an easy silhouette make it a versatile wardrobe essential.',
+        shortDesc: 'A relaxed contemporary set created for everyday movement.',
         isBestseller: true
     },
     { 
@@ -1500,9 +1565,11 @@ const products = [
         img: 'wj.png',
         tag: 'NEW',
         sizes: ['S', 'M', 'L'],
+        colors: ['Default'],
         fabric: 'Water-resistant Poly-Blend',
         care: 'Dry clean only',
         desc: 'Lightweight relaxed jacket with a modern everyday fit. Features functional side pockets and a durable zip-front closure.',
+        shortDesc: 'Lightweight relaxed jacket with a modern everyday fit.',
         isBestseller: false
     },
     { 
@@ -1516,9 +1583,11 @@ const products = [
         img: 'ct.png',
         tag: 'TRENDING',
         sizes: ['XS', 'S', 'M', 'L'],
+        colors: ['Default'],
         fabric: '95% Cotton, 5% Elastane',
         care: 'Machine wash warm, tumble dry low',
         desc: 'A bold contemporary top designed to brighten your wardrobe. Breathable cotton blend ideal for warmer days.',
+        shortDesc: 'A bold contemporary top designed to brighten your wardrobe.',
         isBestseller: true
     },
     { 
@@ -1531,9 +1600,11 @@ const products = [
         reviewsCount: 29,
         img: 'sd.png',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        colors: ['Default'],
         fabric: '100% Viscose Rayon',
         care: 'Hand wash cold, line dry in shade',
         desc: 'Flowing silhouette with a graceful finish for day or evening occasions. Elegant waist detailing for an adaptable look.',
+        shortDesc: 'Flowing silhouette with a graceful finish for day or evening occasions.',
         isBestseller: false
     },
     { 
@@ -1547,9 +1618,11 @@ const products = [
         img: 'CK.png',
         tag: 'BESTSELLER',
         sizes: ['S', 'M', 'L'],
+        colors: ['Default'],
         fabric: 'Soft Wool Blend',
         care: 'Hand wash gently with wool detergent',
         desc: 'Soft textured knit offering warmth without compromising style. Ribbed cuffs and hem line for added comfort.',
+        shortDesc: 'Soft textured knit offering warmth without compromising style.',
         isBestseller: true
     },
     { 
@@ -1562,15 +1635,91 @@ const products = [
         reviewsCount: 37,
         img: 'dj.png',
         sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Default'],
         fabric: '100% Premium Wash Denim Cotton',
         care: 'Machine wash cold inside out',
         desc: 'A timeless wardrobe staple with a modern cut and effortless everyday appeal. Crafted from heavy-gauge denim.',
+        shortDesc: 'A timeless wardrobe staple with a modern cut and effortless everyday appeal.',
+        isBestseller: false
+    },
+    /* NEW MEN'S SECTION PRODUCTS */
+    { 
+        id: 7, 
+        name: 'Daily Blazer Overcoat', 
+        category: 'MEN', 
+        price: 1599, 
+        originalPrice: 2199,
+        rating: 4.8,
+        reviewsCount: 31,
+        img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80',
+        tag: 'MEN',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Beige', 'Cream', 'Red', 'Black'],
+        fabric: 'Structured Wool-Poly Blend',
+        care: 'Dry clean recommended',
+        desc: 'A versatile modern blazer-overcoat designed for everyday sophistication. Its clean structured silhouette works equally well with denim, trousers or casual separates. Available in four distinctive colours, from understated beige and cream to statement red and classic black.',
+        shortDesc: 'Smart everyday layering with a refined blazer silhouette.',
+        isBestseller: true
+    },
+    { 
+        id: 8, 
+        name: 'Round Neck T-Shirt', 
+        category: 'MEN', 
+        price: 799, 
+        originalPrice: 1199,
+        rating: 4.6,
+        reviewsCount: 52,
+        img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80',
+        tag: 'MEN',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Red', 'Black', 'Sky Blue', 'Beige'],
+        fabric: '100% Combed Cotton',
+        care: 'Machine wash cold, tumble dry low',
+        desc: 'A timeless round-neck essential designed for effortless everyday dressing. Comfortable, versatile and easy to style, it works perfectly on its own or layered beneath jackets, overshirts and coats.',
+        shortDesc: 'An everyday essential available in four versatile colours.',
+        isBestseller: false
+    },
+    { 
+        id: 9, 
+        name: "Men's Denim Jeans", 
+        category: 'MEN', 
+        price: 1799, 
+        originalPrice: 2399,
+        rating: 4.7,
+        reviewsCount: 45,
+        img: 'https://images.unsplash.com/photo-1542272604-780c36856842?auto=format&fit=crop&w=600&q=80',
+        tag: 'MEN',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Blue', 'Black', 'Brown', 'Cream'],
+        fabric: 'Durable Stretch Denim',
+        care: 'Machine wash cold, do not bleach',
+        desc: 'A contemporary denim essential built around a comfortable everyday fit. The classic blue, sophisticated black, earthy brown and clean cream options make it easy to create different looks throughout the week.',
+        shortDesc: 'Everyday denim in four modern colour options.',
+        isBestseller: true
+    },
+    { 
+        id: 10, 
+        name: 'Casual Evening Wear', 
+        category: 'MEN', 
+        price: 1099, 
+        originalPrice: 1599,
+        rating: 4.9,
+        reviewsCount: 38,
+        img: 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=600&q=80',
+        tag: 'MEN',
+        sizes: ['L', 'XL', 'XXL', 'XXXL'],
+        colors: ['Stonewash', 'White', 'Orange', 'Grey', 'Black'],
+        fabric: 'Breathable Cotton Linen Blend',
+        care: 'Gentle wash inside out',
+        desc: 'A relaxed evening collection created for men who want comfort without losing their style. Featuring contemporary colours and an easy casual silhouette, these pieces are ideal for dinners, social gatherings, evening outings and weekend occasions.',
+        shortDesc: 'Relaxed evening style with comfort built for every occasion.',
         isBestseller: false
     }
 ];
 
 let cart = [];
 let wishlist = [];
+let currentModalProductId = null;
 let selectedSize = null;
 
 /* RENDER PRODUCTS WITH FILTERS & SORTING */
@@ -1583,11 +1732,15 @@ function renderProducts() {
     const selectedSizeFilter = document.getElementById('sizeFilter').value;
     const selectedSort = document.getElementById('sortSelect').value;
 
-    let filtered = products.filter(p => p.id >= 2 && p.id <= 5);
+    let filtered = products.filter(p => p.id >= 2);
 
     // Keyword Search
     if (query) {
-        filtered = filtered.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+        filtered = filtered.filter(p => 
+            p.name.toLowerCase().includes(query) || 
+            p.desc.toLowerCase().includes(query) ||
+            p.category.toLowerCase().includes(query)
+        );
     }
 
     // Category Filter
@@ -1633,7 +1786,7 @@ function renderProducts() {
                         </div>
                         <div style="font-size: 12px; color: #f1c40f;">★ ${product.rating} (${product.reviewsCount})</div>
                     </div>
-                    <p class="description">${product.desc}</p>
+                    <p class="description">${product.shortDesc || product.desc}</p>
                     <div class="card-btn-group">
                         <button class="card-view-btn" onclick="openProductModal(${product.id})">View Details</button>
                         <button class="card-add-btn" onclick="quickAddToCart(${product.id})">Add To Bag</button>
@@ -1660,6 +1813,35 @@ function toggleWishlist(productId) {
     }
     updateWishlistUI();
     renderProducts();
+
+    if (currentModalProductId === productId) {
+        syncModalWishlistState(productId);
+    }
+}
+
+function toggleWishlistInModal() {
+    if (currentModalProductId) {
+        toggleWishlist(currentModalProductId);
+    }
+}
+
+function syncModalWishlistState(productId) {
+    const isWishlisted = wishlist.includes(productId);
+    
+    const headerBtn = document.getElementById('modalHeaderWishlistBtn');
+    const imageBtn = document.getElementById('modalImageWishlistBtn');
+    const actionBtn = document.getElementById('modalWishlistActionBtn');
+
+    if (headerBtn) {
+        headerBtn.classList.toggle('active', isWishlisted);
+    }
+    if (imageBtn) {
+        imageBtn.classList.toggle('active', isWishlisted);
+    }
+    if (actionBtn) {
+        actionBtn.classList.toggle('active', isWishlisted);
+        actionBtn.innerHTML = isWishlisted ? '♥ Saved' : '♥ Wishlist';
+    }
 }
 
 function updateWishlistUI() {
@@ -1669,11 +1851,7 @@ function updateWishlistUI() {
     [1, 6].forEach(id => {
         const btn = document.getElementById(`wishlist-btn-${id}`);
         if (btn) {
-            if (wishlist.includes(id)) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            btn.classList.toggle('active', wishlist.includes(id));
         }
     });
 
@@ -1711,6 +1889,7 @@ function openProductModal(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
+    currentModalProductId = productId;
     selectedSize = product.sizes ? product.sizes[0] : 'Free Size';
 
     document.getElementById('modalImg').src = product.img;
@@ -1722,12 +1901,24 @@ function openProductModal(productId) {
         <span style="font-size: 13px; color: #f1c40f; margin-left: 10px;">★ ${product.rating} (${product.reviewsCount} reviews)</span>
     `;
     
+    let colorOptionsHtml = '';
+    if (product.colors && product.colors.length > 0) {
+        colorOptionsHtml = `
+            <div style="margin-bottom: 15px;">
+                <strong style="font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 6px;">COLOURS:</strong>
+                <div style="font-size: 12px; opacity: 0.9;">${product.colors.join(' • ')}</div>
+            </div>
+        `;
+    }
+
     document.getElementById('modalDesc').innerHTML = `
         <p style="margin-bottom: 15px;">${product.desc}</p>
         
+        ${colorOptionsHtml}
+
         <div style="margin-bottom: 15px;">
             <strong style="font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 8px;">SELECT SIZE:</strong>
-            <div style="display: flex; gap: 8px;" id="sizeContainer">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="sizeContainer">
                 ${product.sizes.map(size => `
                     <button type="button" 
                             onclick="selectSize('${size}')" 
@@ -1745,13 +1936,15 @@ function openProductModal(productId) {
         </div>
     `;
     
+    syncModalWishlistState(productId);
+
     const cartBtn = document.getElementById('modalAddToCartBtn');
     cartBtn.onclick = function() {
         addToCart(product.id, selectedSize);
         closeProductModal();
     };
 
-    // Render Recommendations (excluding current product)
+    // Render Recommendations
     const recs = products.filter(p => p.id !== productId).slice(0, 3);
     document.getElementById('modalRecsContainer').innerHTML = recs.map(rec => `
         <div class="rec-card" onclick="openProductModal(${rec.id})">
@@ -1783,6 +1976,7 @@ function selectSize(size) {
 function closeProductModal(e) {
     if (!e || e.target.id === 'productModal' || e.target.classList.contains('close-modal-btn')) {
         document.getElementById('productModal').classList.remove('active');
+        currentModalProductId = null;
     }
 }
 
