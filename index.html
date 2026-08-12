@@ -331,6 +331,13 @@ button {
     margin-right: auto;
 }
 
+.section-divider-title {
+    margin: 60px auto 30px auto;
+    max-width: 1120px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 40px;
+}
+
 .products-heading .label {
     font-size: 9px;
     letter-spacing: 4px;
@@ -436,8 +443,18 @@ button {
     transition: transform .5s ease;
 }
 
-.product-card:hover .product-image img {
-    transform: scale(1.04);
+/* LANDSCAPE ADJUSTMENTS FOR MEN's CARDS */
+.product-card.men-card {
+    grid-column: 1 / -1; /* Spans full width for clear landscape presentation */
+}
+
+.product-card.men-card .product-image {
+    aspect-ratio: 16 / 9; /* Wide landscape aspect ratio */
+    background: #1e170e;
+}
+
+.product-card.men-card .product-image img {
+    object-fit: contain; /* Ensures full image displaying multi-colors is completely visible without cropping */
 }
 
 .wishlist-btn {
@@ -876,6 +893,12 @@ footer {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* MODAL ADJUSTMENT FOR LANDSCAPE IMAGES */
+.modal-image.landscape-mode img {
+    object-fit: contain;
+    background: #101c27;
 }
 
 .modal-details {
@@ -1334,6 +1357,7 @@ footer {
         <div class="filter-group">
             <select id="categoryFilter" class="filter-select" onchange="handleFilterChange()">
                 <option value="ALL">All Categories</option>
+                <option value="WOMEN">Women & Unisex</option>
                 <option value="MEN">Men</option>
                 <option value="SET">Sets</option>
                 <option value="OUTERWEAR">Outerwear</option>
@@ -1362,7 +1386,19 @@ footer {
         </div>
     </div>
 
+    <!-- MAIN COLLECTION / WOMEN'S SECTION -->
+    <div class="products-heading" id="womenSectionHeading">
+        <div class="label">WOMEN'S & UNISEX</div>
+        <h2>Essential Wardrobe</h2>
+    </div>
     <div class="product-grid" id="productGrid"></div>
+
+    <!-- DEDICATED MEN'S SECTION -->
+    <div class="products-heading section-divider-title" id="menSectionHeading">
+        <div class="label">MEN'S COLLECTION</div>
+        <h2>Designed For Men</h2>
+    </div>
+    <div class="product-grid" id="menProductGrid"></div>
 </section>
 
 <!-- EDITORIAL -->
@@ -1448,7 +1484,7 @@ footer {
     <div class="product-modal-content">
         <button class="close-modal-btn" onclick="closeProductModal()">&times;</button>
         <div class="modal-grid">
-            <div class="modal-image">
+            <div class="modal-image" id="modalImageContainer">
                 <button class="wishlist-btn" id="modalImageWishlistBtn" onclick="toggleWishlistInModal()">♥</button>
                 <img id="modalImg" src="" alt="">
             </div>
@@ -1642,7 +1678,7 @@ const products = [
         shortDesc: 'A timeless wardrobe staple with a modern cut and effortless everyday appeal.',
         isBestseller: false
     },
-    /* NEW MEN'S SECTION PRODUCTS */
+    /* MEN'S SECTION PRODUCTS */
     { 
         id: 7, 
         name: 'Daily Blazer Overcoat', 
@@ -1651,7 +1687,7 @@ const products = [
         originalPrice: 2199,
         rating: 4.8,
         reviewsCount: 31,
-        img: 'blazer.png',
+        img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80',
         tag: 'MEN',
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Beige', 'Cream', 'Red', 'Black'],
@@ -1659,7 +1695,8 @@ const products = [
         care: 'Dry clean recommended',
         desc: 'A versatile modern blazer-overcoat designed for everyday sophistication. Its clean structured silhouette works equally well with denim, trousers or casual separates. Available in four distinctive colours, from understated beige and cream to statement red and classic black.',
         shortDesc: 'Smart everyday layering with a refined blazer silhouette.',
-        isBestseller: true
+        isBestseller: true,
+        isLandscape: true
     },
     { 
         id: 8, 
@@ -1669,7 +1706,7 @@ const products = [
         originalPrice: 1199,
         rating: 4.6,
         reviewsCount: 52,
-        img: 'tshirt.png',
+        img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80',
         tag: 'MEN',
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Red', 'Black', 'Sky Blue', 'Beige'],
@@ -1677,7 +1714,8 @@ const products = [
         care: 'Machine wash cold, tumble dry low',
         desc: 'A timeless round-neck essential designed for effortless everyday dressing. Comfortable, versatile and easy to style, it works perfectly on its own or layered beneath jackets, overshirts and coats.',
         shortDesc: 'An everyday essential available in four versatile colours.',
-        isBestseller: false
+        isBestseller: false,
+        isLandscape: true
     },
     { 
         id: 9, 
@@ -1687,7 +1725,7 @@ const products = [
         originalPrice: 2399,
         rating: 4.7,
         reviewsCount: 45,
-        img: 'denim.png',
+        img: 'https://images.unsplash.com/photo-1542272604-780c36856842?auto=format&fit=crop&w=1200&q=80',
         tag: 'MEN',
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Blue', 'Black', 'Brown', 'Cream'],
@@ -1695,7 +1733,8 @@ const products = [
         care: 'Machine wash cold, do not bleach',
         desc: 'A contemporary denim essential built around a comfortable everyday fit. The classic blue, sophisticated black, earthy brown and clean cream options make it easy to create different looks throughout the week.',
         shortDesc: 'Everyday denim in four modern colour options.',
-        isBestseller: true
+        isBestseller: true,
+        isLandscape: true
     },
     { 
         id: 10, 
@@ -1705,7 +1744,7 @@ const products = [
         originalPrice: 1599,
         rating: 4.9,
         reviewsCount: 38,
-        img: 'casual.png',
+        img: 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=1200&q=80',
         tag: 'MEN',
         sizes: ['L', 'XL', 'XXL', 'XXXL'],
         colors: ['Stonewash', 'White', 'Orange', 'Grey', 'Black'],
@@ -1713,7 +1752,8 @@ const products = [
         care: 'Gentle wash inside out',
         desc: 'A relaxed evening collection created for men who want comfort without losing their style. Featuring contemporary colours and an easy casual silhouette, these pieces are ideal for dinners, social gatherings, evening outings and weekend occasions.',
         shortDesc: 'Relaxed evening style with comfort built for every occasion.',
-        isBestseller: false
+        isBestseller: false,
+        isLandscape: true
     }
 ];
 
@@ -1722,10 +1762,46 @@ let wishlist = [];
 let currentModalProductId = null;
 let selectedSize = null;
 
-/* RENDER PRODUCTS WITH FILTERS & SORTING */
+/* RENDER CARD HELPER */
+function renderCardHtml(product) {
+    const isWishlisted = wishlist.includes(product.id);
+    const isMenCard = product.category === 'MEN' || product.isLandscape;
+    
+    return `
+        <article class="product-card ${isMenCard ? 'men-card' : ''}">
+            <div class="product-image">
+                <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist(${product.id})">♥</button>
+                <img src="${product.img}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/600x350?text=${product.name}'">
+                ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+            </div>
+            <div class="product-info">
+                <div class="category">${product.category}</div>
+                <h3>${product.name}</h3>
+                <div class="product-row">
+                    <div class="price">
+                        ₹${product.price.toLocaleString()} 
+                        <span style="text-decoration: line-through; opacity: 0.5; font-size: 12px; margin-left: 5px;">₹${product.originalPrice.toLocaleString()}</span>
+                    </div>
+                    <div style="font-size: 12px; color: #f1c40f;">★ ${product.rating} (${product.reviewsCount})</div>
+                </div>
+                <p class="description">${product.shortDesc || product.desc}</p>
+                <div class="card-btn-group">
+                    <button class="card-view-btn" onclick="openProductModal(${product.id})">View Details</button>
+                    <button class="card-add-btn" onclick="quickAddToCart(${product.id})">Add To Bag</button>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+/* RENDER PRODUCTS WITH FILTERS & SECTIONS */
 function renderProducts() {
-    const grid = document.getElementById('productGrid');
-    if (!grid) return;
+    const mainGrid = document.getElementById('productGrid');
+    const menGrid = document.getElementById('menProductGrid');
+    const womenHeading = document.getElementById('womenSectionHeading');
+    const menHeading = document.getElementById('menSectionHeading');
+
+    if (!mainGrid || !menGrid) return;
 
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
     const selectedCategory = document.getElementById('categoryFilter').value;
@@ -1745,7 +1821,11 @@ function renderProducts() {
 
     // Category Filter
     if (selectedCategory !== 'ALL') {
-        filtered = filtered.filter(p => p.category === selectedCategory);
+        if (selectedCategory === 'WOMEN') {
+            filtered = filtered.filter(p => p.category !== 'MEN');
+        } else {
+            filtered = filtered.filter(p => p.category === selectedCategory);
+        }
     }
 
     // Size Filter
@@ -1762,39 +1842,35 @@ function renderProducts() {
         filtered.sort((a, b) => (b.isBestseller ? 1 : 0) - (a.isBestseller ? 1 : 0));
     }
 
-    if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; opacity: 0.7;">No products match your search/filter criteria.</div>`;
-        return;
+    const womenProducts = filtered.filter(p => p.category !== 'MEN');
+    const menProducts = filtered.filter(p => p.category === 'MEN');
+
+    // Handle Women Section
+    if (womenProducts.length > 0) {
+        womenHeading.style.display = 'block';
+        mainGrid.style.display = 'grid';
+        mainGrid.innerHTML = womenProducts.map(renderCardHtml).join('');
+    } else {
+        womenHeading.style.display = 'none';
+        mainGrid.style.display = 'none';
     }
 
-    grid.innerHTML = filtered.map(product => {
-        const isWishlisted = wishlist.includes(product.id);
-        return `
-            <article class="product-card">
-                <div class="product-image">
-                    <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist(${product.id})">♥</button>
-                    <img src="${product.img}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x375?text=${product.name}'">
-                    ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
-                </div>
-                <div class="product-info">
-                    <div class="category">${product.category}</div>
-                    <h3>${product.name}</h3>
-                    <div class="product-row">
-                        <div class="price">
-                            ₹${product.price.toLocaleString()} 
-                            <span style="text-decoration: line-through; opacity: 0.5; font-size: 12px; margin-left: 5px;">₹${product.originalPrice.toLocaleString()}</span>
-                        </div>
-                        <div style="font-size: 12px; color: #f1c40f;">★ ${product.rating} (${product.reviewsCount})</div>
-                    </div>
-                    <p class="description">${product.shortDesc || product.desc}</p>
-                    <div class="card-btn-group">
-                        <button class="card-view-btn" onclick="openProductModal(${product.id})">View Details</button>
-                        <button class="card-add-btn" onclick="quickAddToCart(${product.id})">Add To Bag</button>
-                    </div>
-                </div>
-            </article>
-        `;
-    }).join('');
+    // Handle Men Section
+    if (menProducts.length > 0) {
+        menHeading.style.display = 'block';
+        menGrid.style.display = 'grid';
+        menGrid.innerHTML = menProducts.map(renderCardHtml).join('');
+    } else {
+        menHeading.style.display = 'none';
+        menGrid.style.display = 'none';
+    }
+
+    if (filtered.length === 0) {
+        womenHeading.style.display = 'none';
+        menHeading.style.display = 'none';
+        mainGrid.style.display = 'grid';
+        mainGrid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; opacity: 0.7;">No products match your search/filter criteria.</div>`;
+    }
 
     updateWishlistUI();
 }
@@ -1832,12 +1908,8 @@ function syncModalWishlistState(productId) {
     const imageBtn = document.getElementById('modalImageWishlistBtn');
     const actionBtn = document.getElementById('modalWishlistActionBtn');
 
-    if (headerBtn) {
-        headerBtn.classList.toggle('active', isWishlisted);
-    }
-    if (imageBtn) {
-        imageBtn.classList.toggle('active', isWishlisted);
-    }
+    if (headerBtn) headerBtn.classList.toggle('active', isWishlisted);
+    if (imageBtn) imageBtn.classList.toggle('active', isWishlisted);
     if (actionBtn) {
         actionBtn.classList.toggle('active', isWishlisted);
         actionBtn.innerHTML = isWishlisted ? '♥ Saved' : '♥ Wishlist';
@@ -1847,12 +1919,9 @@ function syncModalWishlistState(productId) {
 function updateWishlistUI() {
     document.getElementById('wishlistCount').innerText = wishlist.length;
 
-    // Update static wishlist buttons for ID 1 and ID 6
     [1, 6].forEach(id => {
         const btn = document.getElementById(`wishlist-btn-${id}`);
-        if (btn) {
-            btn.classList.toggle('active', wishlist.includes(id));
-        }
+        if (btn) btn.classList.toggle('active', wishlist.includes(id));
     });
 
     const wishlistContainer = document.getElementById('wishlistItemsContainer');
@@ -1891,6 +1960,13 @@ function openProductModal(productId) {
 
     currentModalProductId = productId;
     selectedSize = product.sizes ? product.sizes[0] : 'Free Size';
+
+    const modalImageContainer = document.getElementById('modalImageContainer');
+    if (product.category === 'MEN' || product.isLandscape) {
+        modalImageContainer.classList.add('landscape-mode');
+    } else {
+        modalImageContainer.classList.remove('landscape-mode');
+    }
 
     document.getElementById('modalImg').src = product.img;
     document.getElementById('modalCategory').innerText = product.category;
@@ -1944,7 +2020,6 @@ function openProductModal(productId) {
         closeProductModal();
     };
 
-    // Render Recommendations
     const recs = products.filter(p => p.id !== productId).slice(0, 3);
     document.getElementById('modalRecsContainer').innerHTML = recs.map(rec => `
         <div class="rec-card" onclick="openProductModal(${rec.id})">
